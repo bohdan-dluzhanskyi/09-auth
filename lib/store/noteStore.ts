@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-import { NewNote } from "@/types/note";
+import { NewNote } from '@/types/note';
 
 interface NoteDraft {
   note: NewNote;
@@ -10,21 +10,21 @@ interface NoteDraft {
 }
 
 const initialDraft: NewNote = {
-  title: "",
-  content: "",
-  tag: "Todo",
+  title: '',
+  content: '',
+  tag: 'Todo',
 };
 
 export const useDraft = create<NoteDraft>()(
   persist(
-    (set) => ({
+    set => ({
       note: initialDraft,
-      setDraft: (newDraft) => set(() => ({ note: newDraft })),
+      setDraft: newDraft => set(() => ({ note: newDraft })),
       clearDraft: () => set(() => ({ note: initialDraft })),
     }),
     {
-      name: "note-draft",
-      partialize: (state) => ({ note: state.note }),
-    },
-  ),
+      name: 'note-draft',
+      partialize: state => ({ note: state.note }),
+    }
+  )
 );
